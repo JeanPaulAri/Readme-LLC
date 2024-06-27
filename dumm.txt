@@ -1,0 +1,53 @@
+struct parseTableEntry {
+    Action action;
+    State nextState;
+};
+struct testParseTableEntry {
+    Action action;
+    State nextState;
+};
+map<State, map<string, testParseTableEntry>> testParseTable = {
+    {State::START, {
+        {"H1", {Action::Shift, State::H1}},
+        {"H2", {Action::Shift, State::H2}},
+        {"H3", {Action::Shift, State::H3}},
+        {"ITALIC", {Action::Shift, State::ITALIC}},
+        {"BOLD", {Action::Shift, State::BOLD}},
+        {"UNDERLINE", {Action::Shift, State::UNDERLINE}},
+        {"TEXT", {Action::Shift, State::TEXT}},
+        {"$", {Action::Accept, State::END}}
+    }},
+    {State::H1, {
+        {"TEXT", {Action::Shift, State::TEXT}},
+        {"$", {Action::Reduce, State::START}}
+    }},
+    {State::H2, {
+        {"TEXT", {Action::Shift, State::TEXT}},
+        {"$", {Action::Reduce, State::START}}
+    }},
+    {State::H3, {
+        {"TEXT", {Action::Shift, State::TEXT}},
+        {"$", {Action::Reduce, State::START}}
+    }},
+    {State::ITALIC, {
+        {"TEXT", {Action::Shift, State::TEXT}},
+        {"$", {Action::Reduce, State::START}}
+    }},
+    {State::BOLD, {
+        {"TEXT", {Action::Shift, State::TEXT}},
+        {"$", {Action::Reduce, State::START}}
+    }},
+    {State::UNDERLINE, {
+        {"TEXT", {Action::Shift, State::TEXT}},
+        {"$", {Action::Reduce, State::START}}
+    }},
+    {State::TEXT, {
+        {"H1", {Action::Reduce, State::START}},
+        {"H2", {Action::Reduce, State::START}},
+        {"H3", {Action::Reduce, State::START}},
+        {"ITALIC", {Action::Reduce, State::START}},
+        {"BOLD", {Action::Reduce, State::START}},
+        {"UNDERLINE", {Action::Reduce, State::START}},
+        {"$", {Action::Reduce, State::START}}
+    }}
+};
