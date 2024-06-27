@@ -51,3 +51,27 @@ map<State, map<string, testParseTableEntry>> testParseTable = {
         {"$", {Action::Reduce, State::START}}
     }}
 };
+
+struct Node{
+    string type;
+    string value;
+    vector<Node> children;
+};
+auto testParse = [](vector<Token> tokens) -> Node{
+    Node root;
+    root.type = "PROGRAM";
+    
+    for(auto& token:tokens){
+        Node node;
+        node.type = token.type;
+        node.value = token.value;
+
+        if(tokenTypes.find(token.type) != tokenTypes.end()){
+            root.children.push_back(node);
+        }
+
+    }
+
+    return root;
+};
+//stack pairindex currentToken stackTop
